@@ -1,4 +1,4 @@
-import './App.css';
+import s from './App.module.css';
 import { lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
@@ -10,7 +10,7 @@ const NotFound = lazy(() => import('./components/NotFound/NotFound'))
 
 function App() {
   return (
-    <div className="App">
+    <div className={s.app}>
       <Navigation />
       <Suspense fallback={<Loader />}>
         <Switch>
