@@ -2,9 +2,9 @@ import axios from "axios"
 
 
 export default class MovieFetch {
-    constructor(baseURL, apiKey, endPoint) {
-        this.baseURL = baseURL;
-        this.apiKey = apiKey;
+    constructor(endPoint) {
+        this.baseURL = 'https://api.themoviedb.org/3';
+        this.apiKey = '77a03e7323b26b25e1b79366e61bb66b';
         this.endPoint = endPoint;
         this._searchQuery = '';
         this._searchPage = 1;
@@ -42,12 +42,27 @@ export default class MovieFetch {
     }
 
     getTrending() {
-        const params = `/${this.endPoint}/movie/day?api_key=${this.apiKey}`
+        const params = `/${this.endPoint}?api_key=${this.apiKey}`
         return this.getFetch(params)
     }
 
     getMovieDetails() {
         const params = `/${this.endPoint}/${this.movieId}?api_key=${this.apiKey}`
+        return this.getFetch(params)
+    }
+
+    getMovies() {
+        const params = `/${this.endPoint}?api_key=${this.apiKey}&query=${this._searchQuery}&page=${this._searchPage}`
+        return this.getFetch(params) 
+    }
+
+    getMovieCast() {
+        const params = `/${this.endPoint}/${this.movieId}/credits?api_key=${this.apiKey}`
+        return this.getFetch(params)
+    }
+
+    getMovieReview() {
+        const params = `/${this.endPoint}/${this.movieId}/reviews?api_key=${this.apiKey}`
         return this.getFetch(params)
     }
 }

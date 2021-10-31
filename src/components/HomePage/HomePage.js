@@ -1,32 +1,23 @@
 import MovieFetch from "../../services/MovieFetch"
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom";
+import s from './HomePage.module.css'
+import MoviesList from '../MoviesList/MoviesList'
 
-const baseURL = 'https://api.themoviedb.org/3'
-const endPoint = 'trending'
-const apiKey = '77a03e7323b26b25e1b79366e61bb66b'
-const MovieFetchInHomePage = new MovieFetch(baseURL, apiKey, endPoint)
+const endPoint = 'trending/movie/day'
+const MovieFetchInHomePage = new MovieFetch(endPoint)
 
 export default function HomePage() {
     const [movies, setMovies] = useState([])
     
     useEffect(() => {
         MovieFetchInHomePage.getTrending()
-            .then(data => setMovies(data.data.results))
+            .then(data =>setMovies(data.data.results))
     }, [])
     
     return (
         <>
-            <h1>Trending today</h1>
-            <ul>
-                {movies.map(e => {
-                    return (
-                        <li key={e.id}>
-                            <Link to={`/movies/${e.id}`}>{e.title}</Link>
-                        </li>
-                    )
-                })}
-            </ul>
+            <h1 className={s.title}>Trending today</h1>
+            {movies && (<MoviesList moviesArr={movies}/>)}
         </>
     )
 }

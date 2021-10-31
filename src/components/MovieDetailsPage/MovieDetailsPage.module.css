@@ -1,5 +1,45 @@
 .image {
   display: block;
-  width: 400px;
-  height: 600px;
+  width: 100%;
+  margin: auto 0;
+}
+.listGenres {
+  list-style: none;
+  display: flex;
+  padding: 0;
+}
+.listGenresItem {
+  margin-right: 10px;
+}
+.movieCard {
+  display: grid;
+  grid-template-columns: minmax(100px, 320px) 1fr;
+  grid-gap: 20px;
+  border-bottom: 1px solid white;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+.button {
+  border-radius: 5px;
+  border: none;
+}
+.buttonBack {
+  margin: 20px 0;
+  composes: button;
+}
+.buttonBack:hover,
+.buttonBack:focus,
+.button:hover,
+.button:focus {
+  background-color: #2196f3;
+}
+.buttonList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 120px;
+}
+.title {
+  text-align: center;
 }
