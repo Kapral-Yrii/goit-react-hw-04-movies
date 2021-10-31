@@ -2,9 +2,16 @@
   display: inline-block;
   text-decoration: none;
   padding: 12px;
+  margin: 0 5px;
   font-weight: 500;
   color: #2a363b;
   font-size: 18px;
+  border-bottom: 3px solid transparent;
+}
+
+.link:hover,
+.link:focus {
+  border-bottom: 3px solid currentColor;
 }
 
 .activeLink {
@@ -13,5 +20,6 @@
 }
 
 .nav {
+  padding-bottom: 15px;
   border-bottom: 1px solid black;
 }

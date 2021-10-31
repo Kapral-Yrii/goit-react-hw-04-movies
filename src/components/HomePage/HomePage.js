@@ -1,5 +1,6 @@
 import MovieFetch from "../../services/MovieFetch"
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom";
 
 const baseURL = 'https://api.themoviedb.org/3'
 const endPoint = 'trending'
@@ -8,19 +9,24 @@ const MovieFetchInHomePage = new MovieFetch(baseURL, apiKey, endPoint)
 
 export default function HomePage() {
     const [movies, setMovies] = useState([])
-
+    
     useEffect(() => {
         MovieFetchInHomePage.getTrending()
-        .then(data => setMovies(data.data.results))
+            .then(data => setMovies(data.data.results))
     }, [])
-
+    
     return (
-        <ul>
-            {movies.map(e => {
-                return (
-                    <li key={e.id}>{e.title}</li>
-                )
-            })}
-        </ul>
+        <>
+            <h1>Trending today</h1>
+            <ul>
+                {movies.map(e => {
+                    return (
+                        <li key={e.id}>
+                            <Link to={`/movies/${e.id}`}>{e.title}</Link>
+                        </li>
+                    )
+                })}
+            </ul>
+        </>
     )
 }

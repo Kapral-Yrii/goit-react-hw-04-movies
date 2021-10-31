@@ -8,6 +8,7 @@ export default class MovieFetch {
         this.endPoint = endPoint;
         this._searchQuery = '';
         this._searchPage = 1;
+        this._movieId = null;
     }
 
     get searchQuery() {
@@ -22,10 +23,15 @@ export default class MovieFetch {
     set searchPage(value) {
         return (this._searchPage = value)
     }
+    get movieId() {
+        return this._movieId
+    }
+    set movieId(value) {
+        return (this._movieId = value)
+    }
 
-    async getTrending() {
+    async getFetch(params) {
         axios.defaults.baseURL = this.baseURL
-        const params = `/${this.endPoint}/movie/day?api_key=${this.apiKey}`
         try {
             const response = await axios.get(params)
             const data = await response
@@ -33,5 +39,15 @@ export default class MovieFetch {
         } catch (error) {
             console.log(error.message);
         }
+    }
+
+    getTrending() {
+        const params = `/${this.endPoint}/movie/day?api_key=${this.apiKey}`
+        return this.getFetch(params)
+    }
+
+    getMovieDetails() {
+        const params = `/${this.endPoint}/${this.movieId}?api_key=${this.apiKey}`
+        return this.getFetch(params)
     }
 }
