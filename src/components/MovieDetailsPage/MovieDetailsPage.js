@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, lazy, Suspense } from "react";
-import { useParams, Link, useRouteMatch, Route } from "react-router-dom";
+import { useParams, Link, useRouteMatch, Route, useLocation, useHistory } from "react-router-dom";
 import Loader from '../Loader/Loader';
 import MovieFetch from "../../services/MovieFetch";
 import s from './MovieDetailsPage.module.css'
@@ -19,9 +19,15 @@ export default function MovieDetailsPage() {
     const [reviews, setReviews] = useState([])
     const fetchCast = useRef(false)
     const fetchReviews = useRef(false)
+    const location = useLocation()
+    const history = useHistory()
 
     const handleFetchCast = useCallback(() => fetchCast.current = !fetchCast.current, [])
     const handleFetchReview = useCallback(() => fetchReviews.current = !fetchReviews.current, [])
+
+    const goBackButton = useCallback(() => {
+        history.push(location.state.from)
+    }, [history, location.state.from])
 
     useEffect(() => {
         MovieFetchInHomePage.movieId = moviesid
@@ -51,13 +57,13 @@ export default function MovieDetailsPage() {
             )
     })
 
-
-
     return (
         <>
             { movie && (
                 <>
-                    <button type="button" className={s.buttonBack}>← Go back</button>
+                    <button type="button" className={s.buttonBack}
+                        onClick={goBackButton}
+                    >← Go back</button>
                     <div className={s.movieCard}>
                         <img className={s.image}
                             src={movie.poster_path ?
@@ -79,10 +85,22 @@ export default function MovieDetailsPage() {
                             <p>Additional information</p>
                             <ul className={s.buttonList}>
                                 <li>
-                                    <Link to={`${url}/cast`}><button className={s.button} onClick={handleFetchCast}>Cast</button></Link>
+                                    <Link to={{
+                                        pathname: `${url}/cast`,
+                                        state: {
+                                            from: location.state.from
+                                        }
+                                    }}>
+                                        <button className={s.button} onClick={handleFetchCast}>Cast</button>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <Link to={`${url}/reviews`}><button className={s.button} onClick={handleFetchReview}>Reviews</button></Link>
+                                    <Link to={{
+                                        pathname: `${url}/reviews`,
+                                        state: {
+                                            from: location.state.from
+                                        }
+                                    }}><button className={s.button} onClick={handleFetchReview}>Reviews</button></Link>
                                 </li>
                             </ul>
                         </div>

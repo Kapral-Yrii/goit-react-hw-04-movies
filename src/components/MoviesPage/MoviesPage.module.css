@@ -1,4 +1,21 @@
 .form {
+  display: flex;
+  justify-content: center;
   max-width: 300px;
   margin: 20px auto;
+}
+.input {
+  border: none;
+  border-radius: 5px;
+}
+.button {
+  composes: input;
+  margin-left: 10px;
+}
+.button:hover,
+.button:focus {
+  background-color: #2196f3;
+}
+.title {
+  text-align: center;
 }
